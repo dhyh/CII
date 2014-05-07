@@ -9,4 +9,8 @@
 
 #include "heapsort.h"
 
+void max_heapsort(char *array, unsigned int idx)
+{
+	return;
+}
 
