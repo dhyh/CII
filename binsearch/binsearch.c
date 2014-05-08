@@ -10,6 +10,17 @@ int COMPARE(int a, int b)
 }
 
 
+/* --------------------------------------------------------------------------*/
+/**
+ * @Synopsis        折半查找，在list有序的前提下
+ *
+ * @Param list[]
+ * @Param searchnum
+ * @Param n
+ *
+ * @Returns   
+ */
+/* ----------------------------------------------------------------------------*/
 int binsearch(int list[], int searchnum, int n)
 {
 	int middle = 0x00, left = 0x00, right = n-1;
