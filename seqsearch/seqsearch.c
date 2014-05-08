@@ -28,7 +28,7 @@ int main(void)
 {
 	ELEMENT list[MAX_SIZE+1] = {{9}, {1}, {5}, {7}, {8}, {3}, {4}, {2}, {6}, {0}, {-1}};
 
-	int ret = seqsearch(list, 8, MAX_SIZE+1);
+	int ret = seqsearch(list, 8, MAX_SIZE);
 
 	printf("ret : %d\n", ret);
 
