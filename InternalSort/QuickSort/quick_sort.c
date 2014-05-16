@@ -35,7 +35,7 @@ void quick_sort(int list[], int left, int right)
 
 int main(void)
 {
-	int list[] = {26, 5, 37, 1, 61, 67 , 59, 15, 48, 19};
+	int list[] = {26, 5, 37, 1, 61, 67 , 59, 15, 48, 39};
 	int size = sizeof(list)/sizeof(int);
 
 	quick_sort(list, 0, size-1);
