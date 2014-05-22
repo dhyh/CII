@@ -15,6 +15,63 @@ void inorder(tree_pointer ptr)
 	return;
 }
 
+static tree_pointer gtp[20];
+void push(tree_pointer ptr)
+{
+	unsigned int i = 0x00;
+	for (; i < sizeof(gtp)/sizeof(TNODE);i ++){
+		if (NULL == gtp[i]){
+			gtp[i] = ptr;
+			break;
+		}
+	}
+	
+	return;
+}
+
+tree_pointer pop()
+{
+	unsigned int i = 0x00;
+	tree_pointer ptr = NULL;
+	for (; i < sizeof(gtp)/sizeof(TNODE);i ++){
+		if (NULL == gtp[i]){
+			ptr =  gtp[i-1];
+			gtp[i-1] = NULL;
+			break;
+		}
+	}
+	
+	return ptr;
+}
+
+void iter_inorder(tree_pointer ptr)
+{
+	if (NULL == ptr)
+		return;
+    tree_pointer p = ptr;
+
+	do{
+		while(NULL != p){
+			push(p);
+			p = p->left_child;
+		}
+
+		p = pop();
+		printf("Data : %d\n", p->data);
+		p = p->right_child;
+		
+		if(NULL != p){
+			push(p);
+			if (NULL != p->left_child){
+				p = p->left_child;
+				continue;
+			}
+			p = p->right_child;
+		}
+	}while(1);
+		
+	return;
+}
 
 void preorder(tree_pointer ptr)
 {
@@ -98,7 +155,7 @@ int main(void)
 	tp[9].left_child = NULL;
 	tp[9].right_child = NULL;
 
-
+#if 0
 	printf("-----------In Order----------------\n");
 	inorder(tp);
 	printf("-----------------------------------\n\n");
@@ -110,6 +167,8 @@ int main(void)
 	printf("-----------Post Order----------------\n");
 	postorder(tp);
 	printf("-----------------------------------\n\n");
-
+#else
+	iter_inorder(tp);
+#endif
 	return 0x00;
 }
