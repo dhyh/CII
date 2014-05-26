@@ -44,6 +44,81 @@ tree_pointer pop()
 	return ptr;
 }
 
+typedef struct fifo_stack* fifo_pointer;
+typedef struct fifo_stack{
+	tree_pointer node;
+    fifo_pointer next;
+}FIFO_STACK;
+
+static FIFO_STACK gfifo;
+
+void fifo_push(tree_pointer ptr)
+{
+	fifo_pointer *p = &gfifo.next, prev = NULL;
+	
+	FIFO_STACK *pfifo = (FIFO_STACK *)calloc(1, sizeof(FIFO_STACK));
+	if (NULL == pfifo){
+		fprintf(stderr, "%s : calloc error!\n", __func__);
+		return;
+	}
+
+	pfifo->node = ptr;
+
+	while(NULL != (*p)){
+		prev = (*p);
+		p = &prev->next;
+	}
+
+	(*p) = pfifo;
+
+	return;
+}
+
+tree_pointer fifo_pop()
+{
+	fifo_pointer p = gfifo.next;
+	tree_pointer ptr = NULL;
+
+	if (NULL == p){
+		return NULL;
+	}
+	gfifo.next = p->next;
+	ptr = p->node;
+	free(p);
+	p = NULL;
+
+	return ptr;
+}
+
+void level_order(tree_pointer ptr)
+{
+	if (NULL == ptr)
+		return;
+	tree_pointer p = ptr;
+
+	if (NULL != p) fifo_push(p);
+	do{
+		if (NULL == (p = fifo_pop())){
+			printf("pre_pop equal NULL!\n");
+			break;
+		}
+		printf("Data : %d\n", p->data);
+		if (NULL != p){
+			if (NULL != p->left_child){
+				fifo_push(p->left_child);
+			}
+			
+			if(NULL != p->right_child){
+				fifo_push(p->right_child);
+			}
+		}
+
+	}while(1);
+
+	return;
+}
+
+
 void iter_inorder(tree_pointer ptr)
 {
 	if (NULL == ptr)
@@ -56,18 +131,13 @@ void iter_inorder(tree_pointer ptr)
 			p = p->left_child;
 		}
 
-		p = pop();
+		if (NULL == (p = pop())){
+			printf("pop equal NULL!\n");
+			break;
+		}
 		printf("Data : %d\n", p->data);
 		p = p->right_child;
 		
-		if(NULL != p){
-			push(p);
-			if (NULL != p->left_child){
-				p = p->left_child;
-				continue;
-			}
-			p = p->right_child;
-		}
 	}while(1);
 		
 	return;
@@ -168,7 +238,8 @@ int main(void)
 	postorder(tp);
 	printf("-----------------------------------\n\n");
 #else
-	iter_inorder(tp);
+	/*iter_inorder(tp);*/
+	level_order(tp);
 #endif
 	return 0x00;
 }
