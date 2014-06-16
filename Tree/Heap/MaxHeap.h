@@ -5,7 +5,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_SIZE (20)
+#define MAX_ELEMENTS (200)
+
+#define HEAP_FULL(n) ((n) == (MAX_ELEMENTS-1))
+#define HEAP_EMPTY(n) (!(n))
 
 
 typedef struct maxheap* MaxHeap;
@@ -16,11 +19,10 @@ struct entry{
 };
 
 struct maxheap{
-	MaxHeap create(unsigned int );
-	int     heapfull(MaxHeap , unsigned int);
-	int     heapempty(MaxHeap );
-	MaxHeap insert(MaxHeap , Entry , unsigned int);
-	Entry   delet(MaxHeap , unsigned int);
+	Entry        head;
+	unsigned int size;
+	int     (*insert)(MaxHeap , Entry );
+    int     (*del)(MaxHeap heap, Entry entry);
 };	
 
 #endif
