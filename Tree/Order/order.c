@@ -1,4 +1,4 @@
-#include "../tree.h"
+#include "order.h"
 
 void inorder(tree_pointer ptr)
 {
