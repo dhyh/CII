@@ -10,7 +10,7 @@ typedef struct tree_node *tree_pointer;
 
 typedef struct tree_node{
 	int data;
-	tree_pointer left_child, right_child;
+	tree_pointer left_child, right_child, parent;
 }TNODE;
 
 #endif
